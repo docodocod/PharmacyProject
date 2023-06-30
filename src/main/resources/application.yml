@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local #default
+    active: local # default
     group:
       local:
         - common
@@ -11,25 +11,13 @@ spring:
 spring:
   config:
     activate:
-      on-profiles: common
+      on-profile: common
 
----
-spring:
-  config:
-    activate:
-      on-profiles: local
-
----
-spring:
-  config:
-    activate:
-      on-profiles: prod
-
----
 kakao:
   rest:
     api:
       key: ${KAKAO_REST_API_KEY}
+
 
 ---
 spring:
@@ -48,3 +36,10 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
