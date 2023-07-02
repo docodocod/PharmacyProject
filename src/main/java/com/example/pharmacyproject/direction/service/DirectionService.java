@@ -13,7 +13,9 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.swing.text.Document;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -31,8 +33,8 @@ public class DirectionService {
 
     public List<Direction> buildDirectionList(DocumentDto documentDto){ //파라미터는 고객의 위도,경도
 
-        //약국 데이터 조회
-        List<PharmacyDto> pharmacyDtos=pharmacySearchService.searchPharmacyDtoList();
+        if(Objects.isNull(documentDto)) return Collections.emptyList();
+
         //거리 계산 알고리즘을 이용하여, 고객과 약국 사이의 거리를 계산하고 sort
         return pharmacySearchService.searchPharmacyDtoList()
                 .stream().map(pharmacyDto ->
@@ -45,9 +47,13 @@ public class DirectionService {
                                 .targetLatitude(pharmacyDto.getLatitude())
                                 .targetLongitude(pharmacyDto.getLongitude())
                                 .distance(
-                                        calculateDistance(documentDto.getLatitude(), documentDto.getLongitude(), phar)
+                                        calculateDistance(documentDto.getLatitude(), documentDto.getLongitude(),
+                                                pharmacyDto.getLatitude(),pharmacyDto.getLongitude())
                                 )
                                 .build())
+                .filter(direction->direction.getDistance()<=RADIUS_KM)
+                .sorted(Comparator.comparing(Direction::getDistance))
+                .limit(MAX_SEARCH_COUNT)
                 .collect(Collectors.toList());
     }
 

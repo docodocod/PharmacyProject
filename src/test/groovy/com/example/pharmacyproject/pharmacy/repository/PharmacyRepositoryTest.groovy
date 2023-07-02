@@ -66,21 +66,20 @@ class PharmacyRepositoryTest extends AbstractIntegrationContainerBaseTest {
         result.size()==1
     }
 
-    def "BaseTimeEntity 등록"(){
+    def "BaseTimeEntity insert"() {
+
         given:
-        LocalDateTime now=LocalDateTime.now()
-        String address="서울 특별시 성북구 종암동"
-        String name="은혜 약국"
+        def now = LocalDateTime.now()
+        String address = "서울 특별시 성북구 종암동"
+        String name = "은혜 약국"
 
-        def pharmacy=Pharmacy.builder()
-            .pharmacyAddress(address)
-            .pharmacyName(name)
-            .build()
-
+        def pharmacy = Pharmacy.builder()
+                .pharmacyAddress(address)
+                .pharmacyName(name)
+                .build()
         when:
         pharmacyRepository.save(pharmacy)
-        def result=pharmacyRepository.findAll()
-
+        def result = pharmacyRepository.findAll()
         then:
         result.get(0).getCreatedDate().isAfter(now)
         result.get(0).getModifiedDate().isAfter(now)
@@ -123,7 +122,7 @@ class PharmacyRepositoryTest extends AbstractIntegrationContainerBaseTest {
 
         when:
         def entity=pharmacyRepository.save(pharmacy)
-        pharmacyRepositoryService.updateAddressWithoutTransaction((entity.getId(),modifiedAddress)
+        pharmacyRepositoryService.updateAddressWithoutTransaction(entity.getId(),modifiedAddress)
 
         def result=pharmacyRepository.findAll()
 

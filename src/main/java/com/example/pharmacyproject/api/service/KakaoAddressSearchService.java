@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
@@ -23,6 +25,16 @@ public class KakaoAddressSearchService { //카카오 api에서 호출하고 응�
 
     @Value("${kakao.rest.api.key}") //환경변수에 있는 값을 가져오기 위해 @Value 선언
     private String kakaoRestApiKey;
+
+    @Retryable(
+            value={RuntimeException.class},
+            maxAttempts =3,
+            backoff = @Backoff(delay=2000)
+
+
+    )
+
+
 
     public KakaoApiResponseDto requestAddressSearch(String address){
         //address를 파라미터로 받고 api 호출 후 응답받은 값을 kakaoApiResponseDtoㄹ 객체에 담는다.
