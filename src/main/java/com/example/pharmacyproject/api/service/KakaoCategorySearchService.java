@@ -28,6 +28,7 @@ public class KakaoCategorySearchService {
     private String kakaoRestApiKey;
 
     public KakaoApiResponseDto requestPharmacyCategorySearch(double latitude, double longitude, double radius) {
+        //카테고리 주소 검색 메서드
 
         URI uri = kakaoUriBuilderService.buildUriByCategorySearch(latitude, longitude, radius, PHARMACY_CATEGORY);
 

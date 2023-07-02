@@ -16,6 +16,6 @@ public class KakaoApiResponseDto {
     private MetaDto metaDto;
 
     @JsonProperty("documents")
-    private List<DocumentDto> documentDto; //document는 리스트로 받아올 것이기 때문에 list로 반환
+    private List<DocumentDto> documentList; //document는 리스트로 받아올 것이기 때문에 list로 반환
 
 }

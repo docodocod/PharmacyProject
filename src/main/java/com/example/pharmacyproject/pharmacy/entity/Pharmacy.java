@@ -28,5 +28,5 @@ public class Pharmacy extends BaseTimeEntity {
 
     public void changePharmacyAddress(String address) {
         this.pharmacyAddress = address;
-    }
+    } //왜 되어있는지 모르겠따.
 }

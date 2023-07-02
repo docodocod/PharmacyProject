@@ -22,15 +22,15 @@ public class Direction extends BaseTimeEntity {
     private Long id;
 
     // 고객
-    private String inputAddress;
-    private double inputLatitude;
-    private double inputLongitude;
+    private String inputAddress; //검색 주소
+    private double inputLatitude; //y 좌표
+    private double inputLongitude; //x 좌표
 
     // 약국
-    private String targetPharmacyName;
-    private String targetAddress;
-    private Double targetLatitude;
-    private Double targetLongitude;
+    private String targetPharmacyName; //주변 약국 이름
+    private String targetAddress; //주변 약국 주소
+    private double targetLatitude; // 주변 약국 y 좌표
+    private double targetLongitude; // 주변 약국 x 좌표
 
     //고객 주소와 약국 주소 사이의 거리
     private double distance;

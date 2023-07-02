@@ -27,7 +27,7 @@ public class PharmacySearchService { //그냥 repositoryService에서 findAll로
                 .collect(Collectors.toList());
     }
     //왜 convertToPharmacyDto를 만들었는가?
-    //Entity는 db에 직접적인 영향을 미치므로
+    //Entity는 db에 직접적인 영향을 미치므로 Entity로 넘김 후 dto로 전달해서 dto로 값을 주고 받는다.
     private PharmacyDto convertToPharmacyDto(Pharmacy pharmacy){
         //레디스를 사용할 떄는 바로 entity를 사용할 수 없기 때문에 dto로 변환해서 넘겨준다.
 
