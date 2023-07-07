@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class DirectionService {
 
     //약국 최대 검색
-    private static final int MAX_SEARCH_COUNT=10;
+    private static final int MAX_SEARCH_COUNT=3;
     //반경 10km 이내
     private static final double RADIUS_KM=10.0;
 
@@ -33,6 +33,8 @@ public class DirectionService {
 
     private final PharmacySearchService pharmacySearchService;
     private final DirectionRepository directionRepository;
+    private final Base62Service base62Service;
+
     private final KakaoCategorySearchService kakaoCategorySearchService;
 
     @Transactional
@@ -40,6 +42,19 @@ public class DirectionService {
         if(CollectionUtils.isEmpty(directionList)) return Collections.emptyList();
         //CollectionUtils.isEmpty()는 java Collection(List, Map, Set)의 종류의 값들의 존재 여부를 판단하는 메서드입니다.
         return directionRepository.saveAll(directionList);
+    }
+
+    @Transactional(readOnly = true)
+    public String findDirectionUriById(String encodedId){
+
+        Long decodedId=base62Service.decodeDirectionId(encodedId);
+        Direction direction=directionRepository.findById(decodedId).orElse(null);
+ b
+        String params=String.join(",",direction.getTargetPharmacyName(),
+                String.valueOf(direction.getTargetLatitude()),String.valueOf(direction.getTargetLongitude()));
+        String result=UriComponentsBuilder.fromHttpUrl(DIRECTION_BASE_URL+params)
+                .toUriString();
+        return result;
     }
 
     public List<Direction> buildDirectionList(DocumentDto documentDto){ //파라미터는 고객의 위도,경도

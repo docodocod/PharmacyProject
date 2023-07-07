@@ -3,7 +3,6 @@ package com.example.pharmacyproject.pharmacy.service;
 import com.example.pharmacyproject.api.dto.DocumentDto;
 import com.example.pharmacyproject.api.dto.KakaoApiResponseDto;
 import com.example.pharmacyproject.api.service.KakaoAddressSearchService;
-import com.example.pharmacyproject.api.service.KakaoUriBuilderService;
 import com.example.pharmacyproject.direction.entity.Direction;
 import com.example.pharmacyproject.direction.service.DirectionService;
 import lombok.AllArgsConstructor;
@@ -22,12 +21,12 @@ public class PharmacyRecommendationService {
     private final KakaoAddressSearchService kakaoAddressSearchService;
     private final DirectionService directionService;
 
-    public void recommendPharmacyList(String address){
+    public Object recommendPharmacyList(String address){
         KakaoApiResponseDto kakaoApiResponseDto= kakaoAddressSearchService.requestAddressSearch(address);
 
         if(Objects.isNull(kakaoApiResponseDto) || CollectionUtils.isEmpty(kakaoApiResponseDto.getDocumentList())){
             log.error("[PharmacyRecommendationService recommendPharmacyList fail] Input address: {}",address);
-            return;
+            return null;
         }
 
         DocumentDto documentDto=kakaoApiResponseDto.getDocumentList().get(0);
@@ -38,5 +37,7 @@ public class PharmacyRecommendationService {
         List<Direction> directionList=directionService.buildDirectionListByCategoryApi(documentDto);
 
         directionService.saveAll(directionList);
+
+        return null;
     };
 };

@@ -20,7 +20,8 @@ import java.net.http.HttpHeaders;
 @Service
 public class KakaoAddressSearchService { //카카오 api에서 호출하고 응답받은 값을 dto에 담아서 return 해주는 서비스
 
-    private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate; //카카오 REST API를 사용하기 위해서 restTemplate 인스턴스 선언
+
     private final KakaoUriBuilderService kakaoUriBuilderService; //의존성 주입
 
     @Value("${kakao.rest.api.key}") //환경변수에 있는 값을 가져오기 위해 @Value 선언
@@ -28,24 +29,20 @@ public class KakaoAddressSearchService { //카카오 api에서 호출하고 응�
 
     @Retryable(
             value={RuntimeException.class},
-            maxAttempts =3,
+            maxAttempts =2,
             backoff = @Backoff(delay=2000)
-
-
     )
-
-
 
     public KakaoApiResponseDto requestAddressSearch(String address){
         //address를 파라미터로 받고 api 호출 후 응답받은 값을 kakaoApiResponseDtoㄹ 객체에 담는다.
-        if(ObjectUtils.isEmpty(address)) return null;
-        //유효성 검사를 하기 위해서 만들어줌
+
+        if(ObjectUtils.isEmpty(address)) return null; //인자 값이 null일 경우 null 반환
 
         URI uri=kakaoUriBuilderService.buildUriByAddressSearch(address);
         //buildUriAddressSearch를 이용하여 URI 생성
 
         org.springframework.http.HttpHeaders headers=new org.springframework.http.HttpHeaders();
-        //헤더에다가 정보를 담아서 용청하기 위해 헤더 인스턴스 선언
+        //헤더에다가 정보를 담아서 요청하기 위해 헤더 인스턴스 선언
 
         headers.set(org.springframework.http.HttpHeaders.AUTHORIZATION,"KakaoAK"+kakaoRestApiKey);
         //헤더 값에 AUTHORIZATION인 카카오 API KEY 값을 넣어줌
