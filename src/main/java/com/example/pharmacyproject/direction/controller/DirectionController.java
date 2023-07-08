@@ -17,7 +17,7 @@ public class DirectionController {
     @GetMapping("/dir/{encodedId}")
     public String searchDirection(@PathVariable("encodedId") String encodedId){
         String result=directionService.findDirectionUriById(encodedId);
-        log,info("[DirectionController searchDirectino] direction uri:{}",result);
+        log.info("[DirectionController searchDirectino] direction uri:{}",result);
         return "redirect:"+result;
     }
 }

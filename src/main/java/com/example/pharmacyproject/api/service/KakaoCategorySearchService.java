@@ -28,12 +28,11 @@ public class KakaoCategorySearchService { //카카오 카테고리 api를 호출
     private static final String PHARMACY_CATEGORY = "PM9"; //약국 데이터
     //카카오 카테고리 api 호출 시 카테고리 코드가 필요하므로 코드명을 초기화
 
-    @Value("${KAKAP_REST_API_KEY}") //@Value 어노테이션을 이용하여 환경변수에 저장 되어 있는 api 키 값을 가져올 수 있다.
+    @Value("${KAKAO_REST_API_KEY}") //@Value 어노테이션을 이용하여 환경변수에 저장 되어 있는 api 키 값을 가져올 수 있다.
     private String kakaoRestApiKey;
 
     public KakaoApiResponseDto requestPharmacyCategorySearch(double latitude, double longitude, double radius) {
         //카테고리 주소 검색 메서드
-
         URI uri = kakaoUriBuilderService.buildUriByCategorySearch(latitude, longitude, radius, PHARMACY_CATEGORY);
         //미리 생성한 uri 변환 메서드를 사용하여 uri를 초기화
 

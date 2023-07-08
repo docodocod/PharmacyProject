@@ -49,11 +49,13 @@ public class DirectionService {
 
         Long decodedId=base62Service.decodeDirectionId(encodedId);
         Direction direction=directionRepository.findById(decodedId).orElse(null);
- b
+
+        assert direction != null;
         String params=String.join(",",direction.getTargetPharmacyName(),
                 String.valueOf(direction.getTargetLatitude()),String.valueOf(direction.getTargetLongitude()));
         String result=UriComponentsBuilder.fromHttpUrl(DIRECTION_BASE_URL+params)
                 .toUriString();
+
         return result;
     }
 
@@ -61,7 +63,7 @@ public class DirectionService {
 
         if(Objects.isNull(documentDto)) return Collections.emptyList();
 
-        //거리 계산 알고리즘을 이용하여, 고객과 약국 사이의 거리를 계산하고 sort
+        //거리 계산 알고리즘을 이용하여, 고객과 약국 사이의 거리r를 계산하고 sort
         return pharmacySearchService.searchPharmacyDtoList() //공공기관에서 제공 받은 데이터를 이용
                 .stream().map(pharmacyDto ->
                         Direction.builder()

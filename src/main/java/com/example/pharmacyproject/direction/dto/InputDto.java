@@ -1,4 +1,4 @@
-package com.example.pharmacyproject.direction.entity;
+package com.example.pharmacyproject.direction.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,3 +8,4 @@ import lombok.Getter;
 public class InputDto {
     private String address;
 }
+

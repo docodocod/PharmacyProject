@@ -1,9 +1,7 @@
 package com.example.pharmacyproject.direction.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,8 +9,6 @@ import javax.persistence.Id;
 
 @Getter
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class DirectionDto {
 
     // 고객

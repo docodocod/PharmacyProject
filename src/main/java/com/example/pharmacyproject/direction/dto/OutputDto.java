@@ -10,8 +10,7 @@ public class OutputDto {
 
     private String pharmacyName;
     private String pharmacyAddress;
-    private String directionUri;
-    private String roadViewUri;
+    private String directionUrl;
+    private String roadViewUrl;
     private String distance;
-
 }
