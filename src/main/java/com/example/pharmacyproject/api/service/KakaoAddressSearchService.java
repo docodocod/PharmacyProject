@@ -55,7 +55,7 @@ public class KakaoAddressSearchService { //카카오 api에서 호출하고 응�
         return restTemplate.exchange(uri, HttpMethod.GET,httpEntity,KakaoApiResponseDto.class).getBody();
     };
 
-    @Recover
+    @Recover //retry에서 오류가 발생했을 시 여기로 넘어오게 된다.
     public KakaoApiResponseDto recover(RuntimeException e, String address) {
         log.error("All the retries failed. address: {}, error : {}", address, e.getMessage());
         return null;

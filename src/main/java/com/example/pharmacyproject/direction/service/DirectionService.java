@@ -29,7 +29,7 @@ public class DirectionService {
     private static final double RADIUS_KM=10.0;
 
     private static final String DIRECTION_BASE_URL = "https://map.kakao.com/link/map/";
-
+    //약국 링크
 
     private final PharmacySearchService pharmacySearchService;
     private final DirectionRepository directionRepository;
@@ -37,15 +37,20 @@ public class DirectionService {
 
     private final KakaoCategorySearchService kakaoCategorySearchService;
 
-    @Transactional
+    @Transactional //응답 값을 저장
     public List<Direction> saveAll(List<Direction> directionList){
         if(CollectionUtils.isEmpty(directionList)) return Collections.emptyList();
         //CollectionUtils.isEmpty()는 java Collection(List, Map, Set)의 종류의 값들의 존재 여부를 판단하는 메서드입니다.
         return directionRepository.saveAll(directionList);
     }
 
+    public Direction findById(String encodeId){
+        Long decodedId=base62Service.decodeDirectionId(encodeId);
+        return directionRepository.findById(decodedId).orElse(null);
+    }
+
     @Transactional(readOnly = true)
-    public String findDirectionUriById(String encodedId){
+    public String findDirectionUrlById(String encodedId){
 
         Long decodedId=base62Service.decodeDirectionId(encodedId);
         Direction direction=directionRepository.findById(decodedId).orElse(null);
@@ -59,7 +64,8 @@ public class DirectionService {
         return result;
     }
 
-    public List<Direction> buildDirectionList(DocumentDto documentDto){ //파라미터는 고객의 위도,경도
+    public List<Direction> buildDirectionList(DocumentDto documentDto){
+        //파라미터는 고객의 위도,경도
 
         if(Objects.isNull(documentDto)) return Collections.emptyList();
 

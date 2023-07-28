@@ -76,4 +76,5 @@ public class PharmacyRedisTemplateService {
     private PharmacyDto deserializePharmacyDto(String value) throws JsonProcessingException {
         return objectMapper.readValue(value, PharmacyDto.class);
     }
+
 }

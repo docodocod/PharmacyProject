@@ -22,7 +22,7 @@ public class KakaoUriBuilderService { //restTemplate에서 uri를 사용하기 �
         //가독성 있게 uri를 만들기 위해 uriComponentsBuilder 사용
 
         uriBuilder.queryParam("query",address);
-        //queryParam을 이용하여 query 키에다가 address 값을 넣어준다.
+        //uriBuilder 함수 안에 queryParam을 이용하여 query 키에다가 address 값을 넣어준다.
 
         URI uri=uriBuilder.build().encode().toUri(); //.encode()는 브라우저로 요청할 때 utf_8로 인코딩해서 uri 만들어준다.
 

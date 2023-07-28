@@ -4,21 +4,21 @@ services:                                               # 이 항목 밑에 실�
     container_name: pharmacy_recommendation_redis       # 컨테이너 명
     build:
       dockerfile: Dockerfile
-      context: ./redis
-    image: dongankim/pharmacy_recommendation_redis
+      context: /redis
+    image: dongankim/pharmacy_recommendation_redis #도커 아이디 이름을 지정해줘야한다.
     ports:
       - "6379:6379"
   pharmacy_recommendation_database:
     container_name: pharmacy_recommendation_database
     build:
       dockerfile: Dockerfile
-      context: ./database
+      context: /database
     image: dongankim/pharmacy_recommendation_database
-    environment:
+    environment: #데이터베이스의 경우 환경변수를 추가해줘야 한다.
       - MARIADB_DATABASE=pharmacy_recommendation
       - MARIADB_ROOT_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
     volumes:
-      - ./database/config:/etc/mysql/conf.d
-      - ./database/init:/docker-entrypoint-initdb.d
+      - /database/config:/etc/mysql/conf.d
+      - /database/init:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"      # 접근 포트 설정 (컨테이너 외부:컨테이너 내부)

@@ -4,7 +4,7 @@ spring:
     url: jdbc:tc:mariadb:10:///pharmacy_recommendation
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     show-sql: true
 
 kakao:

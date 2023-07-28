@@ -10,5 +10,5 @@ public class ObjectMapperConfig {
     @Bean
     public ObjectMapper objectMapper(){
         return new ObjectMapper();
-    }
+    } //redis를 사용하기 위해 데이터들을 맵핑하기 위해
 }
